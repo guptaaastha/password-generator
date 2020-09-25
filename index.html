@@ -8,7 +8,7 @@
   </head>
   <body">
     <div class="main">
-      <h1>PASSWORD GENERATOR</h1>
+      <h1>Password Generator</h1>
       <div class="password-container">
 		<span id="password"></span>
 		<button id="clipboard">copy</button>
@@ -23,16 +23,22 @@
       </div>
       <div class="variable">
         <label>Include UPPERCASE letters</label>
-        <input type="checkbox" id="lower" />
+        <input type="checkbox" id="upper" />
       </div>
       <div class="variable">
         <label>Include Num8er5</label>
-        <input type="checkbox" id="lower" />
+        <input type="checkbox" id="number" />
       </div>
       <div class="variable">
         <label>Include $ymb@ls</label>
-        <input type="checkbox" id="lower" />
+        <input type="checkbox" id="symbol" />
+      </div>
+      <div>
+        <button class="genbutton" id="generate">
+          Generate password
+        </button>
       </div>
     </div>
+    <script src="generator.js"></script>
   </body>
 </html>
