@@ -1,9 +1,11 @@
-const length = document.getElementById("length").value;
-const lowercase = document.getElementById("lower").checked;
-const uppercase = document.getElementById("upper").checked;
-const number = document.getElementById("number").checked;
-const symbol = document.getElementById("symbol").checked;
-let password = "";
+const length1 = document.getElementById("length");
+const lower1 = document.getElementById("lower");
+const upper1 = document.getElementById("upper");
+const num1 = document.getElementById("number");
+const sym1 = document.getElementById("symbol");
+const result = document.getElementById("password");
+
+var generatedPassword = "";
 
 function randomLowercase() {
   // lowercase : 97 - 122
@@ -22,43 +24,56 @@ function randomNumber() {
 
 function randomSymbol() {
   const symbols = "!@#$&{}*?_";
-  return symbols[Math.floor(Math.random() * symbols.length)];
+  return symbols.charAt(Math.floor(Math.random() * symbols.length));
 }
 
 function callRandomFunction(low, up, num, sym) {
-  let random = Math.floor(Math.random() * 3 + 1);
+  let random = Math.floor(Math.random() * 4 + 1);
   switch (random) {
     case 1:
       if (low) {
-        password = password.concat(randomLowercase());
+        generatedPassword += randomLowercase();
       }
       break;
     case 2:
       if (up) {
-        password = password.concat(randomUppercase());
+        generatedPassword += randomUppercase();
       }
       break;
     case 3:
       if (num) {
-        password = password.concat(randomNumber());
+        generatedPassword += randomNumber();
       }
       break;
     case 4:
       if (sym) {
-        password = password.concat(randomSymbol());
+        generatedPassword += randomSymbol();
       }
       break;
   }
 }
 
-window.onload = function () {
-  const btn = document.getElementById("generate");
-  btn.onclick = generatePassword();
-  function generatePassword() {
-    for (let i = 0; i < 100; i++) {
-      callRandomFunction(lowercase, uppercase, number, symbol);
-    }
-    password = password.substring(0, length);
-    document.getElementById("password").innerHTML = password;
+function generatePassword(l, u, n, s, len) {
+  for (let i = 0; i < 100; i++) {
+    callRandomFunction(l, u, n, s, len);
   }
-};
+  generatedPassword = generatedPassword.substring(0, len);
+  console.log(generatedPassword);
+  return generatedPassword;
+}
+
+generate.addEventListener("click", () => {
+  const length = length1.value;
+  const lowercase = lower1.checked;
+  const uppercase = upper1.checked;
+  const number = num1.checked;
+  const symbol = sym1.checked;
+
+  result.innerText = generatePassword(
+    lowercase,
+    uppercase,
+    number,
+    symbol,
+    length
+  );
+});
