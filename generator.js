@@ -85,3 +85,20 @@ generate.addEventListener("click", () => {
     );
   }
 });
+
+clipboard.addEventListener("click", () => {
+  const textarea = document.createElement("textarea");
+  // pw refers to the generatedPassword
+  const pw = result.innerText;
+
+  if (!pw) {
+    return;
+  }
+
+  textarea.value = pw;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  textarea.remove();
+  alert("Password copied to clipboard");
+});
