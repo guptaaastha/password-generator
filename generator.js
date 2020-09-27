@@ -28,11 +28,13 @@ function randomSymbol() {
 }
 
 function callRandomFunction(low, up, num, sym) {
+  // generate a random case from the possible ones
   let random = Math.floor(Math.random() * 4 + 1);
   switch (random) {
     case 1:
       if (low) {
         generatedPassword += randomLowercase();
+        // adds the newly generated random letter in the generated password variable
       }
       break;
     case 2:
@@ -54,26 +56,32 @@ function callRandomFunction(low, up, num, sym) {
 }
 
 function generatePassword(l, u, n, s, len) {
+  // creates a sufficiently long generated password
   for (let i = 0; i < 100; i++) {
     callRandomFunction(l, u, n, s, len);
   }
   generatedPassword = generatedPassword.substring(0, len);
-  console.log(generatedPassword);
+  // make generated password to the desired length
   return generatedPassword;
 }
 
 generate.addEventListener("click", () => {
+  // getting status of checkboxes and value of length
   const length = length1.value;
   const lowercase = lower1.checked;
   const uppercase = upper1.checked;
   const number = num1.checked;
   const symbol = sym1.checked;
 
-  result.innerText = generatePassword(
-    lowercase,
-    uppercase,
-    number,
-    symbol,
-    length
-  );
+  if (length < 1 || length > 20) {
+    alert("The length of password should be between 1 and 20 (inclusive)");
+  } else {
+    result.innerText = generatePassword(
+      lowercase,
+      uppercase,
+      number,
+      symbol,
+      length
+    );
+  }
 });
