@@ -27,42 +27,37 @@ function randomSymbol() {
   return symbols.charAt(Math.floor(Math.random() * symbols.length));
 }
 
-function callRandomFunction(low, up, num, sym) {
-  // generate a random case from the possible ones
-  let random = Math.floor(Math.random() * 4 + 1);
-  switch (random) {
-    case 1:
-      if (low) {
-        generatedPassword += randomLowercase();
-        // adds the newly generated random letter in the generated password variable
-      }
-      break;
-    case 2:
-      if (up) {
-        generatedPassword += randomUppercase();
-      }
-      break;
-    case 3:
-      if (num) {
-        generatedPassword += randomNumber();
-      }
-      break;
-    case 4:
-      if (sym) {
-        generatedPassword += randomSymbol();
-      }
-      break;
-  }
-}
+// to call random generator functions of the types
+const callRandomFunction = {
+  lower: randomLowercase,
+  upper: randomUppercase,
+  number: randomNumber,
+  symbol: randomSymbol,
+};
 
-function generatePassword(l, u, n, s, len) {
-  // creates a sufficiently long generated password
-  for (let i = 0; i < 100; i++) {
-    callRandomFunction(l, u, n, s, len);
+function generatePassword(lower, upper, number, symbol, length) {
+  let generatedPassword = "";
+  const countTypes = lower + upper + number + symbol;
+  const arrayTypes = [{ lower }, { upper }, { number }, { symbol }].filter(
+    (item) => Object.values(item)[0]
+  );
+
+  // nothing has been selected
+  if (countTypes === 0) {
+    return "";
   }
-  generatedPassword = generatedPassword.substring(0, len);
-  // make generated password to the desired length
-  return generatedPassword;
+
+  // create a loop to go through all the selected types
+  for (let i = 0; i < length; i += countTypes) {
+    arrayTypes.forEach((type) => {
+      const funcName = Object.keys(type)[0];
+      generatedPassword += callRandomFunction[funcName]();
+    });
+  }
+
+  const theGeneratedPassword = generatedPassword.slice(0, length);
+
+  return theGeneratedPassword;
 }
 
 generate.addEventListener("click", () => {
